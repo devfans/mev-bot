@@ -13,6 +13,7 @@
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
+    "create": "node build/src/create.js",
     "build:watch": "tsc -w -p tsconfig.json",
     "lint": "eslint . --ext .ts --ext .mts",
     "prettier": "prettier --config .prettierrc --write ."
@@ -45,6 +46,7 @@
     "@solana/web3.js": "^1.73.3",
     "@solendprotocol/solend-sdk": "^0.6.16",
     "agentkeepalive": "^4.3.0",
+    "argio": "^0.0.3",
     "bn.js": "^5.2.1",
     "bs58": "^5.0.0",
     "convict": "^6.2.4",
