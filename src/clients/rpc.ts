@@ -3,17 +3,22 @@ import EventEmitter from 'events';
 import fetch, { RequestInfo, RequestInit, Response } from 'node-fetch';
 import { config } from '../config.js';
 import { logger } from '../logger.js';
-import { Agent } from 'https';
+import { Agent as HttpsAgent } from 'https';
+import Agent from 'agentkeepalive';
 import { Queue } from '@datastructures-js/queue';
 
 const RPC_URL = config.get('rpc_url');
 const RPC_REQUESTS_PER_SECOND = config.get('rpc_requests_per_second');
 const RPC_MAX_BATCH_SIZE = config.get('rpc_max_batch_size');
 
-const keepaliveAgent = new Agent({
+const keepaliveAgent = RPC_URL.startsWith("https") ? new HttpsAgent({
   timeout: 4000,
   keepAlive: true,
   // freeSocketTimeout: 4000,
+  maxSockets: 2048,
+}) : new Agent({
+  timeout: 4000,
+  freeSocketTimeout: 4000,
   maxSockets: 2048,
 });
 
